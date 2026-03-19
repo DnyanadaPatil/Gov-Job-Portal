@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – Govt Job Portal</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🏛️</div>
+      <div class="brand-name">Govt Job Portal</div>
+      <div class="brand-sub">Maharashtra Recruitment</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Main</div>
+      <div class="nav-item">
+        <a class="nav-link active" data-page="page-dashboard" onclick="showPage('page-dashboard')">
+          <span class="nav-icon">📊</span> Dashboard
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" data-page="page-jobs" onclick="showPage('page-jobs')">
+          <span class="nav-icon">💼</span> Jobs Dekho
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" data-page="page-status" onclick="showPage('page-status')">
+          <span class="nav-icon">📋</span> Meri Applications
+        </a>
+      </div>
+
+      <!-- Admin only (JS se dikhega) -->
+      <div class="nav-section-title" id="nav-admin-title" style="display:none">Admin Panel</div>
+      <div class="nav-item" id="nav-admin-jobs" style="display:none">
+        <a class="nav-link" data-page="page-admin-jobs" onclick="showPage('page-admin-jobs')">
+          <span class="nav-icon">📝</span> Jobs Manage Karo
+        </a>
+      </div>
+      <div class="nav-item" id="nav-admin-apps" style="display:none">
+        <a class="nav-link" data-page="page-admin-apps" onclick="showPage('page-admin-apps')">
+          <span class="nav-icon">📁</span> Sab Applications
+        </a>
+      </div>
+      <div class="nav-item" id="nav-users" style="display:none">
+        <a class="nav-link" data-page="page-users" onclick="showPage('page-users')">
+          <span class="nav-icon">👥</span> Users
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="sidebar-avatar">?</div>
+        <div class="user-details">
+          <div class="user-name" id="sidebar-name">Loading...</div>
+          <div class="user-role" id="sidebar-role">-</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <header class="top-header">
+      <div class="header-left">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <h2 id="header-title">Dashboard</h2>
+        <p id="header-sub">Aapka overview yahan hai</p>
+      </div>
+      <div class="header-right">
+        <span class="notification-badge" id="header-user-badge">Loading...</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">💼</div>
+            <div><div class="stat-value" id="stat-jobs">-</div><div class="stat-label">Total Jobs</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">👤</div>
+            <div><div class="stat-value" id="stat-applicants">-</div><div class="stat-label" id="stat-applicants-label">Total Applicants</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div><div class="stat-value" id="stat-approved">-</div><div class="stat-label">Approved</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow">⏳</div>
+            <div><div class="stat-value" id="stat-pending">-</div><div class="stat-label">Pending</div></div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card">
+            <div class="card-header"><h3>📊 Application Status</h3></div>
+            <div class="card-body"><div class="chart-container"><canvas id="statusChart"></canvas></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>⚡ Quick Actions</h3></div>
+            <div class="card-body">
+              <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="showPage('page-jobs')">🔍 Jobs Dekho</button>
+              <button class="btn btn-outline" style="width:100%;margin-bottom:10px" onclick="showPage('page-status')">📋 Meri Applications</button>
+              <div id="admin-quick-actions" style="display:none">
+                <button class="btn btn-success" style="width:100%;margin-bottom:10px" onclick="showPage('page-admin-jobs');openAddJobModal()">➕ Naya Job Add Karo</button>
+                <button class="btn btn-outline" style="width:100%" onclick="showPage('page-admin-apps')">📁 Applications Manage Karo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 Recent Jobs</h3>
+            <button class="btn btn-outline btn-sm" onclick="showPage('page-jobs')">Sab dekho</button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Job Title</th><th>Department</th><th>Last Date</th><th>Vacancies</th></tr></thead>
+              <tbody id="recent-jobs-body"><tr><td colspan="4" class="text-center text-muted">Load ho raha hai...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3>📨 Recent Applications</h3></div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Applicant</th><th>Job</th><th>Apply Kiya</th><th>Status</th></tr></thead>
+              <tbody id="recent-apps-body"><tr><td colspan="4" class="text-center text-muted">Load ho raha hai...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: JOB LISTINGS -->
+      <div class="page" id="page-jobs">
+        <div class="search-bar">
+          <div class="search-input">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="job-search" placeholder="Job ya department search karo..." oninput="searchJobs()"/>
+          </div>
+          <select id="dept-filter" style="padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:inherit;outline:none;min-width:200px" onchange="searchJobs()">
+            <option value="all">Sab Departments</option>
+          </select>
+        </div>
+        <div id="jobs-container"><p class="text-muted">Jobs load ho rahi hain...</p></div>
+      </div>
+
+      <!-- PAGE: MY APPLICATIONS -->
+      <div class="page" id="page-status">
+        <div class="card">
+          <div class="card-header"><h3>📋 Meri Application Status</h3></div>
+          <div class="card-body" id="my-apps-container"><p class="text-muted">Load ho raha hai...</p></div>
+        </div>
+      </div>
+
+      <!-- PAGE: ADMIN - MANAGE JOBS -->
+      <div class="page" id="page-admin-jobs">
+        <div class="card">
+          <div class="card-header">
+            <h3>💼 Sab Jobs</h3>
+            <button class="btn btn-primary btn-sm" onclick="openAddJobModal()">➕ Naya Job</button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Title</th><th>Department</th><th>Vacancies</th><th>Last Date</th><th>Salary</th><th>Actions</th></tr></thead>
+              <tbody id="admin-jobs-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ADMIN - ALL APPLICATIONS -->
+      <div class="page" id="page-admin-apps">
+        <div class="card">
+          <div class="card-header"><h3>📁 Sab Applications</h3></div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Applicant</th><th>Job</th><th>Phone</th><th>Apply Kiya</th><th>Status</th><th>Status Change Karo</th></tr></thead>
+              <tbody id="admin-apps-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ADMIN - USERS -->
+      <div class="page" id="page-users">
+        <div class="card">
+          <div class="card-header"><h3>👥 Registered Users</h3></div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Naam</th><th>Email</th><th>Phone</th><th>Applications</th></tr></thead>
+              <tbody id="users-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Job Detail -->
+<div class="modal-overlay" id="job-detail-modal" onclick="if(event.target===this)closeJobDetail()">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-header">
+      <h3>Job Details</h3>
+      <button class="modal-close" onclick="closeJobDetail()">✕</button>
+    </div>
+    <div id="job-detail-content"></div>
+    <div style="display:flex;gap:10px;margin-top:22px">
+      <button class="btn btn-primary" onclick="applyFromDetail()">Apply Karo</button>
+      <button class="btn btn-outline" onclick="closeJobDetail()">Band Karo</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Apply Job -->
+<div class="modal-overlay" id="apply-modal" onclick="if(event.target===this)closeApplyModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Job Ke Liye Apply Karo</h3>
+      <button class="modal-close" onclick="closeApplyModal()">✕</button>
+    </div>
+    <div style="background:#f3f6fb;padding:14px;border-radius:10px;margin-bottom:20px">
+      <div style="font-size:12px;color:#6b7280">Apply kar rahe ho:</div>
+      <div style="font-weight:700" id="apply-job-title">-</div>
+      <div style="font-size:13px;color:#1a56db" id="apply-dept">-</div>
+    </div>
+    <form id="apply-form" onsubmit="return false">
+      <input type="hidden" id="apply-job-id"/>
+      <div class="form-row">
+        <div class="form-group"><label>Phone Number *</label><input type="tel" id="apply-phone" placeholder="10 digit number"/></div>
+        <div class="form-group"><label>Date of Birth *</label><input type="date" id="apply-dob"/></div>
+      </div>
+      <div class="form-group"><label>Highest Qualification *</label><input type="text" id="apply-qualification" placeholder="Jaise: B.Tech Civil, Mumbai University"/></div>
+      <div class="form-group"><label>Experience</label><input type="text" id="apply-experience" placeholder="Jaise: 2 saal / Fresher"/></div>
+      <div class="form-group"><label>Address *</label><textarea id="apply-address" placeholder="Pura address likho"></textarea></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-primary" id="apply-submit-btn" onclick="submitApplication()">Submit Karo</button>
+        <button class="btn btn-outline" onclick="closeApplyModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Add/Edit Job -->
+<div class="modal-overlay" id="job-modal" onclick="if(event.target===this)closeJobModal()">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <h3 id="job-modal-title">Naya Job Add Karo</h3>
+      <button class="modal-close" onclick="closeJobModal()">✕</button>
+    </div>
+    <form id="job-form" onsubmit="return false">
+      <input type="hidden" id="job-id-field"/>
+      <div class="form-group"><label>Job Title *</label><input type="text" id="job-title-field" placeholder="Jaise: Junior Engineer (Civil)"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>Department *</label><input type="text" id="job-dept-field" placeholder="Jaise: Public Works Department"/></div>
+        <div class="form-group"><label>Location</label><input type="text" id="job-location-field" placeholder="Jaise: Maharashtra"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Salary Range *</label><input type="text" id="job-salary-field" placeholder="Jaise: 35400 - 112400"/></div>
+        <div class="form-group"><label>Vacancies</label><input type="number" id="job-vacancies-field" placeholder="Jaise: 100" min="1"/></div>
+      </div>
+      <div class="form-group"><label>Qualification *</label><input type="text" id="job-qual-field" placeholder="Jaise: B.Tech Civil Engineering"/></div>
+      <div class="form-group"><label>Last Date *</label><input type="date" id="job-lastdate-field"/></div>
+      <div class="form-group"><label>Job Description *</label><textarea id="job-desc-field" rows="4" placeholder="Job ke baare mein likho..."></textarea></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-primary" id="job-save-btn" onclick="saveJob()">Save Karo</button>
+        <button class="btn btn-outline" onclick="closeJobModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  const currentUser = requireAuth();
+
+  document.getElementById('sidebar-name').textContent = currentUser.name;
+  document.getElementById('sidebar-role').textContent = currentUser.role === 'admin' ? '🔑 Administrator' : '👤 Candidate';
+  document.getElementById('sidebar-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('header-user-badge').textContent = '👋 Namaste, ' + currentUser.name;
+
+  if (currentUser.role === 'admin') {
+    document.getElementById('nav-admin-title').style.display = 'block';
+    document.getElementById('nav-admin-jobs').style.display  = 'block';
+    document.getElementById('nav-admin-apps').style.display  = 'block';
+    document.getElementById('nav-users').style.display       = 'block';
+    document.getElementById('admin-quick-actions').style.display = 'block';
+    document.getElementById('stat-applicants-label').textContent = 'Total Users';
+  }
+
+  loadDashboard();
+</script>
+
+</body>
+</html>

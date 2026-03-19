@@ -1,0 +1,160 @@
+{
+  "users": [
+    {
+      "id": "admin-001",
+      "name": "Admin User",
+      "email": "admin@govtjobs.in",
+      "password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+      "role": "admin",
+      "createdAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "user-001",
+      "name": "Rahul Sharma",
+      "email": "rahul@example.com",
+      "password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+      "role": "user",
+      "createdAt": "2025-01-05T00:00:00Z"
+    },
+    {
+      "id": "user-002",
+      "name": "Priya Patel",
+      "email": "priya@example.com",
+      "password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+      "role": "user",
+      "createdAt": "2025-01-10T00:00:00Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-001",
+      "title": "Junior Engineer (Civil)",
+      "department": "Public Works Department",
+      "qualification": "B.Tech / B.E. in Civil Engineering",
+      "salary": "35400 - 112400",
+      "lastDate": "2025-12-31",
+      "description": "Candidates will be responsible for planning, designing and overseeing construction and maintenance of building structures and infrastructure such as roads, railways, bridges, dams, and irrigation projects.",
+      "vacancies": 120,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "job-002",
+      "title": "Sub-Inspector of Police",
+      "department": "Home Department",
+      "qualification": "Bachelor's Degree in any discipline",
+      "salary": "41800 - 132300",
+      "lastDate": "2025-12-31",
+      "description": "Selected candidates will work to protect the public, maintain law and order, investigate crimes, and enforce laws. Responsibilities include patrolling areas and preparing detailed reports.",
+      "vacancies": 250,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-02T00:00:00Z"
+    },
+    {
+      "id": "job-003",
+      "title": "District Health Officer",
+      "department": "Health & Family Welfare",
+      "qualification": "MBBS + MD / Post-Graduation in Public Health",
+      "salary": "67700 - 208700",
+      "lastDate": "2025-12-31",
+      "description": "Responsible for overall health administration in the district including supervision of government hospitals, PHCs, and implementation of national health programmes.",
+      "vacancies": 45,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-03T00:00:00Z"
+    },
+    {
+      "id": "job-004",
+      "title": "Revenue Assistant",
+      "department": "Revenue Department",
+      "qualification": "12th Pass / Higher Secondary",
+      "salary": "19900 - 63200",
+      "lastDate": "2025-12-31",
+      "description": "Responsible for assisting in land records management, revenue collection, and providing support services to Revenue Officers.",
+      "vacancies": 500,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-04T00:00:00Z"
+    },
+    {
+      "id": "job-005",
+      "title": "Teacher (Primary School)",
+      "department": "School Education Department",
+      "qualification": "B.Ed + TET / CTET Qualified",
+      "salary": "23700 - 75500",
+      "lastDate": "2025-12-31",
+      "description": "Primary teachers responsible for teaching students of classes 1 to 5. Duties include preparing lesson plans, evaluating student progress and maintaining classroom discipline.",
+      "vacancies": 800,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-05T00:00:00Z"
+    },
+    {
+      "id": "job-006",
+      "title": "Clerk-Typist",
+      "department": "General Administration Department",
+      "qualification": "Graduation + Typing Speed 30 WPM",
+      "salary": "19900 - 63200",
+      "lastDate": "2025-12-31",
+      "description": "Clerical duties including typing official correspondence, maintaining files and registers, and providing secretarial support to senior officers.",
+      "vacancies": 300,
+      "location": "Maharashtra",
+      "createdAt": "2025-01-06T00:00:00Z"
+    }
+  ],
+  "applications": [
+    {
+      "id": "app-001",
+      "jobId": "job-001",
+      "userId": "user-001",
+      "applicantName": "Rahul Sharma",
+      "applicantEmail": "rahul@example.com",
+      "phone": "9876543210",
+      "dob": "1998-04-15",
+      "qualification": "B.Tech Civil Engineering from Mumbai University",
+      "experience": "1 year internship at L&T Construction",
+      "address": "123, Andheri East, Mumbai - 400069",
+      "status": "Pending",
+      "appliedAt": "2025-06-10T00:00:00Z"
+    },
+    {
+      "id": "app-002",
+      "jobId": "job-002",
+      "userId": "user-001",
+      "applicantName": "Rahul Sharma",
+      "applicantEmail": "rahul@example.com",
+      "phone": "9876543210",
+      "dob": "1998-04-15",
+      "qualification": "B.A. Political Science",
+      "experience": "Fresher",
+      "address": "123, Andheri East, Mumbai - 400069",
+      "status": "Approved",
+      "appliedAt": "2025-06-15T00:00:00Z"
+    },
+    {
+      "id": "app-003",
+      "jobId": "job-003",
+      "userId": "user-002",
+      "applicantName": "Priya Patel",
+      "applicantEmail": "priya@example.com",
+      "phone": "9123456789",
+      "dob": "1992-11-20",
+      "qualification": "MBBS + MD Public Health",
+      "experience": "5 years in government hospitals",
+      "address": "456, Bandra West, Mumbai - 400050",
+      "status": "Approved",
+      "appliedAt": "2025-06-20T00:00:00Z"
+    },
+    {
+      "id": "app-004",
+      "jobId": "job-005",
+      "userId": "user-002",
+      "applicantName": "Priya Patel",
+      "applicantEmail": "priya@example.com",
+      "phone": "9123456789",
+      "dob": "1992-11-20",
+      "qualification": "B.Ed from SNDT University, TET Qualified",
+      "experience": "2 years as a private school teacher",
+      "address": "456, Bandra West, Mumbai - 400050",
+      "status": "Rejected",
+      "appliedAt": "2025-07-05T00:00:00Z"
+    }
+  ]
+}

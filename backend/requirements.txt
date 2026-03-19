@@ -1,0 +1,26 @@
+# ================================================================
+# 📄 FILE: requirements.txt
+# 📂 FOLDER: backend/
+# 🎯 YEH KYA HAI?
+#    Yeh Node.js ka package.json jaisa hai — Python mein.
+#    Jab tum likhte ho "pip install -r requirements.txt"
+#    toh Python automatically sab packages download kar leta hai.
+#
+# 📦 PACKAGES KA MATLAB:
+#   flask        = Python ka web server framework. Isse hum
+#                  apna server banate hain. Express.js jaisa hi hai.
+#   flask-cors   = Browser ko allow karta hai frontend se
+#                  backend se baat karne ke liye. Bina iske
+#                  browser block kar deta hai requests.
+#   bcrypt       = Password ko scramble (hash) karta hai.
+#                  Taki koi database churaye toh real password
+#                  nahi pata chale.
+#   pyjwt        = JWT token banata hai. Yeh ek digital ID card
+#                  hai jo login ke baad user ko milta hai.
+#                  Har request ke saath yeh card bheja jaata hai.
+# ================================================================
+
+flask==3.0.0
+flask-cors==4.0.0
+bcrypt==4.1.2
+pyjwt==2.8.0

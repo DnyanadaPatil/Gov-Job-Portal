@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+  📄 FILE: index.html
+  📂 FOLDER: frontend/
+  🎯 LOGIN PAGE — pehla page jo user dekhta hai
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Govt Job Portal</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="auth-body">
+
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="emblem">🏛️</div>
+      <h1>Government of Maharashtra</h1>
+      <p>Online Job Recruitment Portal</p>
+    </div>
+
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-subtitle">Apne account mein login karo</p>
+
+    <div class="alert" id="login-alert"></div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="login-email" placeholder="Email daalo"/>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Password daalo"/>
+    </div>
+
+    <button class="btn btn-primary" id="login-btn" onclick="handleLogin()">
+      Login Karo
+    </button>
+
+    <div class="auth-link" style="text-align:center;margin-top:20px;color:#6b7280;font-size:13px">
+      Account nahi hai? <a href="register.html" style="color:#1a56db;font-weight:600">Register karo</a>
+    </div>
+
+    <!-- Demo credentials -->
+    <div style="margin-top:24px;padding:16px;background:#f3f6fb;border-radius:10px;font-size:12px;line-height:1.8">
+      <strong>📋 Demo Login:</strong><br/>
+      <span style="color:#1a56db">Admin:</span> admin@govtjobs.in / secret123<br/>
+      <span style="color:#0e9f6e">User:</span>  rahul@example.com / secret123
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    redirectIfLoggedIn();
+
+    async function handleLogin() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const btn      = document.getElementById('login-btn');
+
+      if (!email || !password) {
+        showAlert('login-alert', 'Email aur password dono bharo.');
+        return;
+      }
+
+      btn.innerHTML = '<span class="spinner"></span> Login ho raha hai...';
+      btn.disabled = true;
+
+      try {
+        const data = await apiCall('/auth/login', 'POST', { email, password });
+
+        localStorage.setItem('govtUser', JSON.stringify(data.user));
+        localStorage.setItem('govtToken', data.token);
+
+        showAlert('login-alert', '✅ Login ho gaya! Redirect ho raha hai...', 'success');
+        setTimeout(() => { window.location.href = 'pages/dashboard.html'; }, 800);
+
+      } catch (err) {
+        showAlert('login-alert', err.message);
+      } finally {
+        btn.innerHTML = 'Login Karo';
+        btn.disabled = false;
+      }
+    }
+
+    document.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>

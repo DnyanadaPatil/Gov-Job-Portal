@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register – Govt Job Portal</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="auth-body">
+
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="emblem">🏛️</div>
+      <h1>Government of Maharashtra</h1>
+      <p>Online Job Recruitment Portal</p>
+    </div>
+
+    <h2 class="auth-title">Account Banao</h2>
+    <p class="auth-subtitle">Register karke sarkari jobs ke liye apply karo</p>
+
+    <div class="alert" id="register-alert"></div>
+
+    <div class="form-group">
+      <label>Pura Naam</label>
+      <input type="text" id="reg-name" placeholder="Apna naam likho"/>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="reg-email" placeholder="Email daalo"/>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="reg-password" placeholder="Minimum 6 characters"/>
+    </div>
+
+    <button class="btn btn-primary" id="reg-btn" onclick="handleRegister()">
+      Account Banao
+    </button>
+
+    <div class="auth-link" style="text-align:center;margin-top:20px;color:#6b7280;font-size:13px">
+      Pehle se account hai? <a href="index.html" style="color:#1a56db;font-weight:600">Login karo</a>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    redirectIfLoggedIn();
+
+    async function handleRegister() {
+      const name     = document.getElementById('reg-name').value.trim();
+      const email    = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const btn      = document.getElementById('reg-btn');
+
+      if (!name || !email || !password) {
+        showAlert('register-alert', 'Sab fields bharo.');
+        return;
+      }
+      if (password.length < 6) {
+        showAlert('register-alert', 'Password kam se kam 6 characters ka hona chahiye.');
+        return;
+      }
+
+      btn.innerHTML = '<span class="spinner"></span> Register ho raha hai...';
+      btn.disabled = true;
+
+      try {
+        await apiCall('/auth/register', 'POST', { name, email, password });
+        showAlert('register-alert', '✅ Registration ho gayi! Login page pe ja raha hai...', 'success');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+      } catch (err) {
+        showAlert('register-alert', err.message);
+      } finally {
+        btn.innerHTML = 'Account Banao';
+        btn.disabled = false;
+      }
+    }
+
+    document.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleRegister();
+    });
+  </script>
+</body>
+</html>

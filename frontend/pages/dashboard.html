@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – Govt Job Portal</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🏛</div>
+      <div class="brand-name">Govt Job Portal</div>
+      <div class="brand-sub">Maharashtra Recruitment</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">MAIN</div>
+      <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">🎯</span> Dashboard
+      </a>
+      <a href="javascript:void(0)" class="nav-item" data-page="jobs" onclick="loadPage('jobs')">
+        <span class="nav-icon">💼</span> View Jobs
+      </a>
+      <a href="javascript:void(0)" class="nav-item" data-page="my-applications" onclick="loadPage('my-applications')">
+        <span class="nav-icon">📋</span> My Applications
+      </a>
+
+      <div class="nav-section-title admin-only">ADMIN PANEL</div>
+      <a href="javascript:void(0)" class="nav-item admin-only" data-page="manage-jobs" onclick="loadPage('manage-jobs')">
+        <span class="nav-icon">📝</span> Manage Jobs
+      </a>
+      <a href="javascript:void(0)" class="nav-item admin-only" data-page="all-applications" onclick="loadPage('all-applications')">
+        <span class="nav-icon">📁</span> All Applications
+      </a>
+      <a href="javascript:void(0)" class="nav-item admin-only" data-page="users" onclick="loadPage('users')">
+        <span class="nav-icon">👥</span> Users
+      </a>
+    </nav>
+
+    <div class="sidebar-user" id="sidebarUser"></div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Your overview is here</p>
+      </div>
+      <div id="welcomeMsg" class="welcome-badge"></div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-icon">💼</div>
+        <div class="stat-info">
+          <div class="stat-number" id="totalJobs">–</div>
+          <div class="stat-label">Total Jobs</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <div class="stat-info">
+          <div class="stat-number" id="totalUsers">–</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <div class="stat-number" id="approvedApps">–</div>
+          <div class="stat-label">Approved</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <div class="stat-number" id="pendingApps">–</div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3>📊 Application Status</h3>
+        </div>
+        <div class="card-body" id="appStatusContainer">
+          <p class="text-muted">No applications yet.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>⚡ Quick Actions</h3>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary w-full mb-2" onclick="loadPage('jobs')">🔵 View Jobs</button>
+          <button class="btn btn-outline w-full mb-2" onclick="loadPage('my-applications')">📋 My Applications</button>
+          <button class="btn btn-success w-full mb-2 admin-only" onclick="loadPage('manage-jobs')">+ Add New Job</button>
+          <button class="btn btn-outline w-full admin-only" onclick="loadPage('all-applications')">📁 Manage Applications</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>
